@@ -925,7 +925,7 @@ def serve_frontend(path):
         return send_from_directory(frontend_folder, path)
     else:
         # Changed from 'index.html' to 'home.html'
-        return send_from_directory(frontend_folder, 'home.html')
+        return send_from_directory(frontend_folder, 'Home.html')
 
 if __name__ == '__main__':
     logging.basicConfig(
