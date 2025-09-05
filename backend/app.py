@@ -11,10 +11,10 @@ import json
 import tempfile
 
 # Import utility modules
-from utils.data_processor import DataProcessor
-from utils.auth import AuthManager
-from warehouse_slotting_optimizer import WarehouseSlottingOptimizer
-from models.ranking_slotting_model import RankingSlottingModel
+from backend.utils.data_processor import DataProcessor
+from backend.utils.auth import AuthManager
+from backend.warehouse_slotting_optimizer import WarehouseSlottingOptimizer
+from backend.models.ranking_slotting_model import RankingSlottingModel
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
