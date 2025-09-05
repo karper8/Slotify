@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Test - Slotting Tool</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="Home.html">Home</a>
+        <a href="Login.html">Account</a>
+        <a href="AboutUs.html">About Us</a>
+        <a href="upload_page.html">Upload</a>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+
+    <main class="form-container">
+        <h1>Session Test Page</h1>
+        
+        <div id="sessionInfo">
+            <h3>Current Session Status:</h3>
+            <p id="sessionStatus">Checking...</p>
+            <button onclick="checkSession()">Check Session</button>
+            <button onclick="clearSession()">Clear Session</button>
+            <button onclick="goToLogin()">Go to Login</button>
+            <button onclick="goToUpload()">Go to Upload</button>
+        </div>
+
+        <div id="localStorageInfo">
+            <h3>localStorage Contents:</h3>
+            <pre id="localStorageData"></pre>
+        </div>
+    </main>
+
+    <script>
+        // Check session on page load
+        window.addEventListener('load', function() {
+            checkSession();
+            displayLocalStorage();
+        });
+
+        function checkSession() {
+            const user = localStorage.getItem('user');
+            const statusElement = document.getElementById('sessionStatus');
+            
+            if (user) {
+                try {
+                    const userData = JSON.parse(user);
+                    if (userData.loggedIn && userData.username) {
+                        statusElement.textContent = `✅ LOGGED IN as: ${userData.username}`;
+                        statusElement.style.color = 'green';
+                    } else {
+                        statusElement.textContent = '❌ User data exists but not properly logged in';
+                        statusElement.style.color = 'orange';
+                    }
+                } catch (e) {
+                    statusElement.textContent = '❌ Error parsing user data';
+                    statusElement.style.color = 'red';
+                }
+            } else {
+                statusElement.textContent = '❌ No user session found';
+                statusElement.style.color = 'red';
+            }
+        }
+
+        function clearSession() {
+            localStorage.removeItem('user');
+            checkSession();
+            displayLocalStorage();
+        }
+
+        function goToLogin() {
+            window.location.href = 'Login.html';
+        }
+
+        function goToUpload() {
+            window.location.href = 'upload_page.html';
+        }
+
+        function displayLocalStorage() {
+            const dataElement = document.getElementById('localStorageData');
+            const data = {};
+            
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                data[key] = localStorage.getItem(key);
+            }
+            
+            dataElement.textContent = JSON.stringify(data, null, 2);
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        }
+    </script>
+</body>
+</html>

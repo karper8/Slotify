@@ -1,0 +1,107 @@
+2025-08-24 22:14:54,782 - __main__ - INFO - Starting Warehouse Management System
+2025-08-24 22:15:02,675 - __main__ - ERROR - Dependencies check failed
+2025-08-24 22:18:27,020 - __main__ - INFO - Starting Warehouse Management System
+2025-08-24 22:18:52,271 - __main__ - INFO - Importing Flask application
+2025-08-24 22:18:56,126 - __main__ - INFO - Flask application started successfully
+2025-08-24 22:18:56,425 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-08-24 22:18:56,428 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-24 22:19:10,624 - werkzeug - INFO - 192.168.1.9 - - [24/Aug/2025 22:19:10] "[33mGET / HTTP/1.1[0m" 404 -
+2025-08-24 22:19:10,940 - werkzeug - INFO - 192.168.1.9 - - [24/Aug/2025 22:19:10] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-24 22:19:36,185 - werkzeug - INFO - 192.168.1.9 - - [24/Aug/2025 22:19:36] "[31m[1mGET /api/models HTTP/1.1[0m" 401 -
+2025-08-24 22:19:36,558 - werkzeug - ERROR - 192.168.1.9 - - [24/Aug/2025 22:19:36] code 400, message Bad request version ('.\x13Ø!\x12àÛ2%÷\x98\'\x0fÒ¯EtgðBàm\x00"\x13\x01\x13\x03\x13\x02À+À/Ì©Ì¨À,À0À')
+2025-08-24 22:19:36,561 - werkzeug - INFO - 192.168.1.9 - - [24/Aug/2025 22:19:36] "[31m[1m\x16\x03\x01\x07O\x01\x00\x07K\x03\x03É*\x1e\x96±¢cw\x89g\x10åÅIñÎûWóÒ¡\x8fèÃÝ\x96/ó\x89R\x9e\x8d #Mk\x01²T·.·\x1e.\x13Ø!\x12àÛ2%÷\x98'\x0fÒ¯EtgðBàm\x00"\x13\x01\x13\x03\x13\x02À+À/Ì©Ì¨À,À0À[0m" 400 -
+2025-08-24 22:19:36,568 - werkzeug - ERROR - 192.168.1.9 - - [24/Aug/2025 22:19:36] code 400, message Bad request version ('6Ô½ö\x0f¼àfùæwø\\\x82@Û-:Ï²4\x8c.\x00"\x13\x01\x13\x03\x13\x02À+À/Ì©Ì¨À,À0À')
+2025-08-24 22:19:36,571 - werkzeug - INFO - 192.168.1.9 - - [24/Aug/2025 22:19:36] "[31m[1m\x16\x03\x01\x02~\x01\x00\x02z\x03\x03J±KOî3<\x95¤±\x9eé9\x19­$\x86\x93í\x91\x81d&¾\x9bR\x0d\x95ã\x82X¢ ¤U ïÝ\x10Lá\x856Ô½ö\x0f¼àfùæwø\\\x82@Û-:Ï²4\x8c.\x00"\x13\x01\x13\x03\x13\x02À+À/Ì©Ì¨À,À0À[0m" 400 -
+2025-08-24 22:19:53,679 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:19:53] "[31m[1mGET /api/models HTTP/1.1[0m" 401 -
+2025-08-24 22:19:53,995 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:19:53] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-24 22:19:58,152 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:19:58] "[33mGET / HTTP/1.1[0m" 404 -
+2025-08-24 22:19:58,449 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:19:58] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-24 22:20:27,256 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:20:27] "[31m[1mGET /api/inventory-analytics HTTP/1.1[0m" 401 -
+2025-08-24 22:20:27,483 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:20:27] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-24 22:22:33,053 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:22:33] "GET /api/health HTTP/1.1" 200 -
+2025-08-24 22:22:33,352 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:22:33] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-24 22:24:51,991 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:24:51] "GET /api/health HTTP/1.1" 200 -
+2025-08-24 22:26:24,332 - app - ERROR - Signup error: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+2025-08-24 22:26:24,332 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:26:24] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 22:26:56,447 - app - ERROR - Signup error: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+2025-08-24 22:26:56,447 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:26:56] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 22:27:37,798 - app - ERROR - Signup error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-08-24 22:27:37,798 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:27:37] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 22:27:48,369 - app - ERROR - Signup error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-08-24 22:27:48,369 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:27:48] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 22:28:17,045 - app - ERROR - Signup error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-08-24 22:28:17,047 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:28:17] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 22:28:46,840 - app - ERROR - Signup error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-08-24 22:28:46,840 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:28:46] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 22:28:52,392 - app - ERROR - Signup error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-08-24 22:28:52,392 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:28:52] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 22:29:49,440 - app - ERROR - Signup error: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+2025-08-24 22:29:49,440 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:29:49] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 22:30:03,342 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:30:03] "[31m[1mGET /api/signup HTTP/1.1[0m" 405 -
+2025-08-24 22:38:14,389 - app - ERROR - Signup error: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+2025-08-24 22:38:14,389 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:38:14] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 22:38:28,189 - app - ERROR - Signup error: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+2025-08-24 22:38:28,189 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:38:28] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 22:38:33,432 - app - ERROR - Signup error: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+2025-08-24 22:38:33,432 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:38:33] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 22:41:07,742 - app - ERROR - Signup error: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+2025-08-24 22:41:07,748 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 22:41:07] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 22:41:56,707 - __main__ - INFO - Starting Warehouse Management System
+2025-08-24 22:45:07,671 - __main__ - INFO - Importing Flask application
+2025-08-24 22:45:21,046 - __main__ - ERROR - Application error: name 'app' is not defined
+2025-08-24 22:45:44,165 - __main__ - INFO - Starting Warehouse Management System
+2025-08-24 22:45:49,809 - __main__ - INFO - Importing Flask application
+2025-08-24 22:45:50,604 - __main__ - ERROR - Application error: name 'app' is not defined
+2025-08-24 22:46:47,731 - __main__ - INFO - Starting Warehouse Management System
+2025-08-24 22:46:53,540 - __main__ - INFO - Importing Flask application
+2025-08-24 22:46:54,186 - __main__ - ERROR - Application error: name 'app' is not defined
+2025-08-24 22:49:40,700 - __main__ - INFO - Starting Warehouse Management System
+2025-08-24 22:49:46,702 - __main__ - INFO - Importing Flask application
+2025-08-24 22:49:47,333 - __main__ - ERROR - Application error: name 'app' is not defined
+2025-08-24 23:19:18,741 - __main__ - INFO - Starting Warehouse Management System
+2025-08-24 23:19:30,999 - __main__ - INFO - Importing Flask application
+2025-08-24 23:19:32,182 - __main__ - ERROR - Application error: name 'app' is not defined
+2025-08-24 23:19:56,641 - __main__ - INFO - Starting Warehouse Management System
+2025-08-24 23:20:02,036 - __main__ - INFO - Importing Flask application
+2025-08-24 23:20:02,579 - __main__ - ERROR - Application error: name 'app' is not defined
+2025-08-24 23:22:11,529 - __main__ - INFO - Starting Warehouse Management System
+2025-08-24 23:22:16,953 - __main__ - INFO - Importing Flask application
+2025-08-24 23:22:17,638 - __main__ - INFO - Flask application started successfully
+2025-08-24 23:22:17,746 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-08-24 23:22:17,746 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-24 23:22:32,278 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:22:32] "GET /api/health HTTP/1.1" 200 -
+2025-08-24 23:22:46,463 - app - ERROR - Signup error: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+2025-08-24 23:22:46,463 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:22:46] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 23:25:58,944 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:25:58] "[31m[1mGET /api/inventory-analytics HTTP/1.1[0m" 401 -
+2025-08-24 23:28:23,136 - app - ERROR - Signup error: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+2025-08-24 23:28:23,139 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:28:23] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 23:29:26,564 - app - ERROR - Signup error: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+2025-08-24 23:29:26,566 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:29:26] "[35m[1mPOST /api/signup HTTP/1.1[0m" 500 -
+2025-08-24 23:31:19,038 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:31:19] "POST /api/signup HTTP/1.1" 200 -
+2025-08-24 23:32:45,138 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:32:45] "POST /api/login HTTP/1.1" 200 -
+2025-08-24 23:36:28,512 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:36:28] "GET /api/session HTTP/1.1" 200 -
+2025-08-24 23:47:48,292 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:47:48] "[31m[1mPOST /api/upload-dataset HTTP/1.1[0m" 400 -
+2025-08-24 23:48:35,817 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:48:35] "[31m[1mPOST /api/upload-dataset HTTP/1.1[0m" 400 -
+2025-08-24 23:50:09,476 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:50:09] "[31m[1mPOST /api/upload-dataset HTTP/1.1[0m" 400 -
+2025-08-24 23:52:04,991 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:52:04] "[31m[1mPOST /api/upload-dataset HTTP/1.1[0m" 400 -
+2025-08-24 23:52:37,081 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:52:37] "[31m[1mPOST /api/upload-dataset HTTP/1.1[0m" 400 -
+2025-08-24 23:52:53,480 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:52:53] "[31m[1mPOST /api/upload-dataset HTTP/1.1[0m" 400 -
+2025-08-24 23:52:54,235 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:52:54] "[31m[1mPOST /api/upload-dataset HTTP/1.1[0m" 400 -
+2025-08-24 23:57:49,944 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:57:49] "[31m[1mPOST /api/upload-dataset HTTP/1.1[0m" 400 -
+2025-08-24 23:58:04,748 - __main__ - INFO - Starting Warehouse Management System
+2025-08-24 23:58:33,930 - __main__ - INFO - Importing Flask application
+2025-08-24 23:58:37,917 - __main__ - INFO - Flask application started successfully
+2025-08-24 23:58:38,188 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-08-24 23:58:38,188 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-24 23:59:20,594 - werkzeug - INFO - 127.0.0.1 - - [24/Aug/2025 23:59:20] "POST /api/upload-dataset HTTP/1.1" 200 -
+2025-08-25 00:01:53,138 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 00:01:53] "[31m[1mPOST /api/process-slotting HTTP/1.1[0m" 400 -
+2025-08-25 00:06:37,972 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 00:06:37] "[31m[1mPOST /api/process-slotting HTTP/1.1[0m" 400 -

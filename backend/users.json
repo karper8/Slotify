@@ -1,0 +1,38 @@
+{
+  "admin": {
+    "user_id": "91c11b32-79f2-455a-9f25-6d909793eed9",
+    "username": "admin",
+    "password_hash": "40ace754409818a6d3a1636d3e4cbaaa3d3bee7aefa32e890f9e838e5ac5f14c",
+    "salt": "d8daf969209a48818f6894632819736a",
+    "created_at": "2025-08-24T23:31:19.017467",
+    "last_login": "2025-08-28T23:22:58.237364",
+    "login_count": 4
+  },
+  "admin1": {
+    "user_id": "65455211-e245-47d1-961c-35592c0c428f",
+    "username": "admin1",
+    "password_hash": "508cf34d1c04eee4344e988b2f0bd403e466df202aa3e3a78d3385c83a25836c",
+    "salt": "ba80e2b90618446a99c42066c5c480b5",
+    "created_at": "2025-08-25T14:04:00.111211",
+    "last_login": null,
+    "login_count": 0
+  },
+  "admin@gamil.com": {
+    "user_id": "08517ecb-d759-4e5f-acca-73a8778ca041",
+    "username": "admin@gamil.com",
+    "password_hash": "be1da3ec573328e0bfef9c3e58eddf672267b77ee9d8c700515ec7dff0e24629",
+    "salt": "83a9c15b19f2473294543debc28e0382",
+    "created_at": "2025-08-30T00:59:16.394696",
+    "last_login": null,
+    "login_count": 0
+  },
+  "admin@gmail.com": {
+    "user_id": "54a06391-b527-4594-91fb-fb31cb72d9ac",
+    "username": "admin@gmail.com",
+    "password_hash": "50e51a788ce1791043fc39886d3a55935f7744434e6f38591df7d7e084443eef",
+    "salt": "e5bb9012fd60467497e78cf21a3cd6c4",
+    "created_at": "2025-08-30T01:04:45.485004",
+    "last_login": "2025-09-06T02:08:54.336887",
+    "login_count": 10
+  }
+}

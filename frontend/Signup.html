@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Slotting Tool</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body>
+  <!-- ✅ Navbar -->
+  <nav class="navbar">
+    <a href="Home.html">Home</a>
+    <a href="Login.html">Account</a>
+    <a href="AboutUs.html">About Us</a>
+    <a href="upload_page.html">Upload</a>
+    <button class="theme-toggle" onclick="toggleTheme()">
+  <i class="fas fa-moon"></i>
+</button>
+  </nav>
+
+  <!-- ✅ Signup Form -->
+  <main class="form-container">
+    <h1>Sign Up</h1>
+    <form id="signupForm">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required placeholder="Enter your email">
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required placeholder="Enter your password (min 6 characters)">
+
+      <label for="confirm">Confirm Password:</label>
+      <input type="password" id="confirm" name="confirm" required placeholder="Confirm your password">
+
+      <button type="submit" class="button" id="signupButton">
+        <span id="signupButtonText">Create Account</span>
+        <span id="signupButtonSpinner" style="display: none;">
+          <i class="fas fa-spinner fa-spin"></i>
+        </span>
+      </button>
+    </form>
+    <p>Already have an account? <a href="Login.html">Login here</a></p>
+    <div id="signupStatus" class="status-message"></div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Slotting Tool. All rights reserved.</p>
+  </footer>
+
+  <script>
+
+    // ENHANCED: Replace your existing download functions with these enhanced versions
+  // These download the complete Excel file with all original columns + optimization results
+
+  // Primary download function with complete dataset + optimization results
+  async function downloadResults() {
+      if (!currentResults) {
+          showStatus('No results to download', 'error');
+          return;
+      }
+
+      try {
+          showStatus('Preparing complete Excel download with all data...', 'info');
+          
+          const modelParam = currentResults.model === 'random_forest' ? 'random_forest' : 'ranking';
+          console.log('Downloading complete results for model:', modelParam);
+          
+          // Add loading state to download button
+          const downloadBtn = document.querySelector('.action-btn');
+          if (downloadBtn) {
+              downloadBtn.classList.add('downloading');
+              downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating Excel...';
+          }
+          
+          // Use the enhanced complete download endpoint
+          const response = await fetch(`${API_BASE}/download-excel-complete/${modelParam}`, {
+              method: 'GET',
+              credentials: 'include',
+              headers: {
+                  'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+              }
+          });
+
+          console.log('Complete download response status:', response.status);
+          console.log('Response headers:', [...response.headers.entries()]);
+
+          if (response.ok) {
+              // Get the blob data
+              const blob = await response.blob();
+              console.log('Excel blob size:', blob.size, 'bytes');
+              
+              // Get filename from Content-Disposition header or use default
+              let filename = `warehouse_slotting_complete_${modelParam}.xlsx`;
+              const contentDisposition = response.headers.get('Content-Disposition');
+              if (contentDisposition) {
+                  const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+                  if (filenameMatch && filenameMatch[1]) {
+                      filename = filenameMatch[1].replace(/['"]/g, '');
+                  }
+              }
+              console.log('Download filename:', filename);
+              
+              // Validate blob size
+              if (blob.size === 0) {
+                  throw new Error('Downloaded file is empty');
+              }
+              
+              // Create download link and trigger download
+              const url = window.URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.href = url;
+              link.download = filename;
+              link.style.display = 'none';
+              
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              
+              // Clean up the URL object after a delay
+              setTimeout(() => {
+                  window.URL.revokeObjectURL(url);
+                  console.log('Cleaned up blob URL');
+              }, 2000);
+              
+              showStatus(`Complete Excel file downloaded successfully! (${(blob.size / 1024 / 1024).toFixed(2)} MB)`, 'success');
+              
+              // Show file contents info
+              setTimeout(() => {
+                  showStatus('Excel file contains: Complete Results, Original Dataset, Optimization Output, Summary, and Metrics sheets', 'info');
+              }, 3000);
+              
+          } else {
+              const errorText = await response.text();
+              console.error('Complete download failed:', response.status, errorText);
+              
+              // Try fallback method
+              console.log('Trying fallback download method...');
+              await downloadResultsFallbackComplete();
+          }
+      } catch (error) {
+          console.error('Complete download error:', error);
+          console.log('Trying fallback download method...');
+          await downloadResultsFallbackComplete();
+      } finally {
+          // Restore download button
+          const downloadBtn = document.querySelector('.action-btn.downloading');
+          if (downloadBtn) {
+              downloadBtn.classList.remove('downloading');
+              downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download Excel';
+          }
+      }
+  }
+
+  // Fallback download function using base64 with complete dataset
+  async function downloadResultsFallbackComplete() {
+      try {
+          showStatus('Trying alternative download method with complete data...', 'info');
+          
+          const modelParam = currentResults.model === 'random_forest' ? 'random_forest' : 'ranking';
+          const response = await fetch(`${API_BASE}/download-base64-complete/${modelParam}`, {
+              credentials: 'include'
+          });
+
+          if (response.ok) {
+              const result = await response.json();
+              console.log('Base64 complete download response:', {
+                  filename: result.filename, 
+                  size: result.size,
+                  rows: result.total_rows,
+                  columns: result.total_columns,
+                  sheets: result.sheets
+              });
+              
+              // Validate base64 data
+              if (!result.data || result.data.length === 0) {
+                  throw new Error('Base64 data is empty');
+              }
+              
+              // Convert base64 to blob and download
+              try {
+                  const binaryString = atob(result.data);
+                  const bytes = new Uint8Array(binaryString.length);
+                  for (let i = 0; i < binaryString.length; i++) {
+                      bytes[i] = binaryString.charCodeAt(i);
+                  }
+                  
+                  const blob = new Blob([bytes], {
+                      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                  });
+                  
+                  console.log('Created blob from base64, size:', blob.size);
+                  
+                  const url = window.URL.createObjectURL(blob);
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.download = result.filename;
+                  link.style.display = 'none';
+                  
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                  
+                  setTimeout(() => {
+                      window.URL.revokeObjectURL(url);
+                  }, 2000);
+                  
+                  showStatus(`Complete Excel downloaded via fallback! (${result.total_rows} rows, ${result.total_columns} columns)`, 'success');
+                  setTimeout(() => {
+                      showStatus(`File contains ${result.sheets.length} sheets: ${result.sheets.join(', ')}`, 'info');
+                  }, 3000);
+                  
+              } catch (base64Error) {
+                  console.error('Base64 conversion error:', base64Error);
+                  throw new Error('Failed to convert base64 data to file');
+              }
+              
+          } else {
+              const error = await response.json();
+              showStatus(error.error || 'Fallback download failed', 'error');
+          }
+      } catch (error) {
+          console.error('Fallback complete download error:', error);
+          showStatus('All download methods failed. Please check your connection and try again.', 'error');
+          
+          // Offer alternative
+          setTimeout(() => {
+              showStatus('Try refreshing the page and running the optimization again if download continues to fail.', 'info');
+          }, 5000);
+      }
+  }
+
+  // Enhanced comparison download function
+  async function downloadComparisonResults(modelType) {
+      try {
+          showStatus(`Preparing complete ${modelType} results download...`, 'info');
+          
+          // Use the same enhanced method for comparison downloads
+          const response = await fetch(`${API_BASE}/download-excel-complete/${modelType}`, {
+              method: 'GET',
+              credentials: 'include',
+              headers: {
+                  'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+              }
+          });
+
+          if (response.ok) {
+              const blob = await response.blob();
+              
+              // Get filename
+              let filename = `warehouse_slotting_complete_${modelType}.xlsx`;
+              const contentDisposition = response.headers.get('Content-Disposition');
+              if (contentDisposition) {
+                  const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+                  if (filenameMatch && filenameMatch[1]) {
+                      filename = filenameMatch[1].replace(/['"]/g, '');
+                  }
+              }
+              
+              // Create download link and trigger download
+              const url = window.URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.href = url;
+              link.download = filename;
+              link.style.display = 'none';
+              
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              
+              setTimeout(() => window.URL.revokeObjectURL(url), 2000);
+              
+              showStatus(`Complete ${modelType} results downloaded successfully!`, 'success');
+              setTimeout(() => {
+                  showStatus('Excel contains: Original data + Optimization results + Performance metrics', 'info');
+              }, 3000);
+              
+          } else {
+              // Try base64 fallback
+              const fallbackResponse = await fetch(`${API_BASE}/download-base64-complete/${modelType}`, {
+                  credentials: 'include'
+              });
+
+              if (fallbackResponse.ok) {
+                  const result = await fallbackResponse.json();
+                  
+                  const binaryString = atob(result.data);
+                  const bytes = new Uint8Array(binaryString.length);
+                  for (let i = 0; i < binaryString.length; i++) {
+                      bytes[i] = binaryString.charCodeAt(i);
+                  }
+                  
+                  const blob = new Blob([bytes], {
+                      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                  });
+                  
+                  const url = window.URL.createObjectURL(blob);
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.download = result.filename;
+                  link.style.display = 'none';
+                  
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                  
+                  setTimeout(() => window.URL.revokeObjectURL(url), 2000);
+                  
+                  showStatus(`Complete ${modelType} results downloaded via fallback!`, 'success');
+              } else {
+                  const error = await fallbackResponse.json();
+                  showStatus(error.error || 'Download failed', 'error');
+              }
+          }
+      } catch (error) {
+          console.error('Enhanced comparison download error:', error);
+          showStatus('Download failed. Please try again.', 'error');
+      }
+  }
+
+// Add information about what's included in the download
+function showDownloadInfo() {
+    const infoHTML = `
+        <div class="download-info" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0;">
+            <h4 style="margin-top: 0;"><i class="fas fa-file-excel" style="color: #28a745;"></i> Excel Download Contents</h4>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Complete_Results:</strong> Original dataset + Optimization results merged</li>
+                <li><strong>Original_Dataset:</strong> Your uploaded warehouse data (all columns)</li>
+                <li><strong>Optimization_Output:</strong> Model results (new locations, zones, time savings)</li>
+                <li><strong>Summary:</strong> High-level optimization summary</li>
+                <li><strong>Performance_Metrics:</strong> Detailed performance metrics</li>
+            </ul>
+        </div>
+    `;
+    
+    const resultsSection = document.getElementById('resultsSection');
+    if (resultsSection && !resultsSection.querySelector('.download-info')) {
+        const resultsHeader = resultsSection.querySelector('.results-header');
+        if (resultsHeader) {
+            resultsHeader.insertAdjacentHTML('afterend', infoHTML);
+        }
+    }
+}
+
+// Show download info when results are displayed
+function showResults(result, modelType) {
+    // ... existing showResults code ...
+    
+    // Add this at the end of your existing showResults function
+    showDownloadInfo();
+    
+    document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Utility function to format file size
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+    AOS.init();
+
+    // ✅ Theme Toggle Script
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    // ✅ Preserve Theme on Page Reload
+    window.addEventListener('load', function() {
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark');
+        }
+    });
+
+    // Enhanced Signup form handling
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm').value;
+      const statusElement = document.getElementById('signupStatus');
+      const signupButton = document.getElementById('signupButton');
+      const signupButtonText = document.getElementById('signupButtonText');
+      const signupButtonSpinner = document.getElementById('signupButtonSpinner');
+      
+      // Enhanced input validation
+      if (!email || !password || !confirm) {
+        showStatus('Please fill in all fields', 'error');
+        return;
+      }
+      
+      if (!isValidEmail(email)) {
+        showStatus('Please enter a valid email address', 'error');
+        return;
+      }
+      
+      if (password.length < 6) {
+        showStatus('Password must be at least 6 characters long', 'error');
+        return;
+      }
+      
+      if (password !== confirm) {
+        showStatus('Passwords do not match', 'error');
+        return;
+      }
+      
+      // Check password strength
+      if (!isStrongPassword(password)) {
+        showStatus('Password should contain at least one letter and one number', 'error');
+        return;
+      }
+      
+      // Show loading state
+      setLoadingState(true);
+      showStatus('Creating your account...', 'info');
+      
+      try {
+        const response = await fetch('/api/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: email, // Using email as username
+            password: password
+          }),
+          credentials: 'include'
+        });
+
+        const result = await response.json();
+        
+        if (response.ok) {
+          showStatus('Account created successfully! Redirecting to login...', 'success');
+          
+          // Clear form
+          document.getElementById('signupForm').reset();
+          
+          // Redirect to login page after successful signup
+          setTimeout(() => {
+            window.location.href = 'Login.html';
+          }, 2000);
+        } else {
+          showStatus(result.error || 'Signup failed. Please try again.', 'error');
+        }
+      } catch (error) {
+        console.error('Signup error:', error);
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+          showStatus('Cannot connect to server. Please check if the backend is running.', 'error');
+        } else {
+          showStatus('Network error. Please try again.', 'error');
+        }
+      } finally {
+        setLoadingState(false);
+      }
+    });
+
+    // Helper functions
+    function showStatus(message, type) {
+      const statusElement = document.getElementById('signupStatus');
+      statusElement.textContent = message;
+      statusElement.className = `status-message ${type}`;
+      
+      // Auto-hide error messages after 5 seconds
+      if (type === 'error') {
+        setTimeout(() => {
+          statusElement.textContent = '';
+          statusElement.className = 'status-message';
+        }, 5000);
+      }
+    }
+
+    function setLoadingState(isLoading) {
+      const signupButton = document.getElementById('signupButton');
+      const signupButtonText = document.getElementById('signupButtonText');
+      const signupButtonSpinner = document.getElementById('signupButtonSpinner');
+      
+      if (isLoading) {
+        signupButton.disabled = true;
+        signupButtonText.style.display = 'none';
+        signupButtonSpinner.style.display = 'inline-block';
+      } else {
+        signupButton.disabled = false;
+        signupButtonText.style.display = 'inline-block';
+        signupButtonSpinner.style.display = 'none';
+      }
+    }
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    function isStrongPassword(password) {
+      // At least one letter and one number
+      const hasLetter = /[a-zA-Z]/.test(password);
+      const hasNumber = /\d/.test(password);
+      return hasLetter && hasNumber;
+    }
+
+    // Real-time password confirmation validation
+    document.getElementById('confirm').addEventListener('input', function() {
+      const password = document.getElementById('password').value;
+      const confirm = this.value;
+      const statusElement = document.getElementById('signupStatus');
+      
+      if (confirm && password !== confirm) {
+        showStatus('Passwords do not match', 'error');
+      } else if (confirm && password === confirm) {
+        showStatus('Passwords match!', 'success');
+        // Auto-hide success message
+        setTimeout(() => {
+          statusElement.textContent = '';
+          statusElement.className = 'status-message';
+        }, 2000);
+      } else {
+        statusElement.textContent = '';
+        statusElement.className = 'status-message';
+      }
+    });
+
+    // Real-time password strength indicator
+    document.getElementById('password').addEventListener('input', function() {
+      const password = this.value;
+      const statusElement = document.getElementById('signupStatus');
+      
+      if (password.length > 0) {
+        if (password.length < 6) {
+          showStatus('Password too short (min 6 characters)', 'error');
+        } else if (!isStrongPassword(password)) {
+          showStatus('Password should contain letters and numbers', 'error');
+        } else {
+          showStatus('Password strength: Good', 'success');
+          // Auto-hide success message
+          setTimeout(() => {
+            statusElement.textContent = '';
+            statusElement.className = 'status-message';
+          }, 2000);
+        }
+      } else {
+        statusElement.textContent = '';
+        statusElement.className = 'status-message';
+      }
+    });
+  </script>
+</body>
+</html>

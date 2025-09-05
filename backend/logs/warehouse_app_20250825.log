@@ -1,0 +1,125 @@
+2025-08-25 00:06:47,617 - __main__ - INFO - Starting Warehouse Management System
+2025-08-25 00:06:54,769 - __main__ - INFO - Importing Flask application
+2025-08-25 00:06:55,515 - __main__ - INFO - Flask application started successfully
+2025-08-25 00:06:55,623 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-08-25 00:06:55,623 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-25 00:07:00,520 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 00:07:00] "[31m[1mPOST /api/process-slotting HTTP/1.1[0m" 400 -
+2025-08-25 00:07:02,408 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 00:07:02] "[31m[1mPOST /api/process-slotting HTTP/1.1[0m" 400 -
+2025-08-25 00:07:03,815 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 00:07:03] "[31m[1mPOST /api/process-slotting HTTP/1.1[0m" 400 -
+2025-08-25 02:48:16,603 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 02:48:16] "[31m[1mPOST /api/process-slotting HTTP/1.1[0m" 400 -
+2025-08-25 02:48:31,035 - __main__ - INFO - Starting Warehouse Management System
+2025-08-25 02:49:13,671 - __main__ - INFO - Importing Flask application
+2025-08-25 02:49:20,816 - __main__ - ERROR - Application error: View function mapping is overwriting an existing endpoint function: logout
+2025-08-25 02:50:27,712 - __main__ - INFO - Starting Warehouse Management System
+2025-08-25 02:50:33,941 - __main__ - INFO - Importing Flask application
+2025-08-25 02:50:34,692 - __main__ - INFO - Flask application started successfully
+2025-08-25 02:50:35,014 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-08-25 02:50:35,015 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-25 02:50:42,710 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 02:50:42] "GET /api/session HTTP/1.1" 200 -
+2025-08-25 02:50:46,679 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 02:50:46] "[31m[1mPOST /api/process-slotting HTTP/1.1[0m" 400 -
+2025-08-25 02:50:52,284 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 02:50:52] "[31m[1mPOST /api/upload-dataset HTTP/1.1[0m" 400 -
+2025-08-25 02:51:14,456 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 02:51:14] "[31m[1mPOST /api/upload-dataset HTTP/1.1[0m" 400 -
+2025-08-25 03:14:12,170 - __main__ - INFO - Starting Warehouse Management System
+2025-08-25 03:14:23,583 - __main__ - INFO - Importing Flask application
+2025-08-25 03:14:25,303 - __main__ - INFO - Flask application started successfully
+2025-08-25 03:14:25,408 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-08-25 03:14:25,408 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-25 03:16:18,678 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 03:16:18] "GET /api/session HTTP/1.1" 200 -
+2025-08-25 03:16:25,234 - app - INFO - Dataset uploaded and processed successfully. Original: temp_uploads\67e12773-ddd0-4e98-90bc-29f2dc3e5c85_TRY.csv, Processed: temp_uploads\processed_457884e9-2e36-4dca-b4d0-80e6c6b49d1a_TRY.csv
+2025-08-25 03:16:25,235 - app - INFO - Processed columns: ['SKU', 'Location', 'QTY', 'Line', 'Weight', 'depth', 'height', 'Vol', 'Location_Zone']
+2025-08-25 03:16:25,243 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 03:16:25] "POST /api/upload-dataset HTTP/1.1" 200 -
+2025-08-25 03:16:30,376 - app - INFO - Loading processed data from: temp_uploads\processed_457884e9-2e36-4dca-b4d0-80e6c6b49d1a_TRY.csv
+2025-08-25 03:16:30,660 - app - INFO - Loaded processed data with columns: ['SKU', 'Location', 'QTY', 'Line', 'Weight', 'depth', 'height', 'Vol', 'Location_Zone']
+2025-08-25 03:16:30,668 - app - INFO - Data shape: (42832, 9)
+2025-08-25 03:16:30,671 - app - INFO - Generating before heatmap...
+2025-08-25 11:20:27,118 - __main__ - INFO - Starting Warehouse Management System
+2025-08-25 11:21:03,427 - __main__ - INFO - Importing Flask application
+2025-08-25 11:21:07,666 - __main__ - INFO - Flask application started successfully
+2025-08-25 11:21:07,802 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.75.177.120:5000
+2025-08-25 11:21:07,806 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-25 11:21:36,034 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 11:21:36] "GET /api/health HTTP/1.1" 200 -
+2025-08-25 11:21:36,436 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 11:21:36] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-25 11:22:48,668 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 11:22:48] "GET /api/session HTTP/1.1" 200 -
+2025-08-25 11:23:08,957 - app - INFO - Dataset uploaded and processed successfully. Original: temp_uploads\9d181baa-f5ca-4980-8bdb-e3acb50fbd7a_TRY.csv, Processed: temp_uploads\processed_45769a8c-df81-4bbd-88ac-497168e8fe4f_TRY.csv
+2025-08-25 11:23:08,957 - app - INFO - Processed columns: ['SKU', 'Location', 'QTY', 'Line', 'Weight', 'depth', 'height', 'Vol', 'Location_Zone']
+2025-08-25 11:23:08,957 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 11:23:08] "POST /api/upload-dataset HTTP/1.1" 200 -
+2025-08-25 11:23:15,381 - app - INFO - Loading processed data from: temp_uploads\processed_45769a8c-df81-4bbd-88ac-497168e8fe4f_TRY.csv
+2025-08-25 11:23:15,661 - app - INFO - Loaded processed data with columns: ['SKU', 'Location', 'QTY', 'Line', 'Weight', 'depth', 'height', 'Vol', 'Location_Zone']
+2025-08-25 11:23:15,661 - app - INFO - Data shape: (42832, 9)
+2025-08-25 11:23:15,662 - app - INFO - Generating before heatmap...
+2025-08-25 11:45:04,981 - __main__ - INFO - Starting Warehouse Management System
+2025-08-25 11:45:12,605 - __main__ - INFO - Importing Flask application
+2025-08-25 11:45:12,970 - __main__ - ERROR - Application error: invalid syntax (visualizations.py, line 821)
+2025-08-25 11:45:56,379 - __main__ - INFO - Starting Warehouse Management System
+2025-08-25 11:46:01,869 - __main__ - INFO - Importing Flask application
+2025-08-25 11:46:03,058 - __main__ - INFO - Flask application started successfully
+2025-08-25 11:46:03,208 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.75.177.120:5000
+2025-08-25 11:46:03,208 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-25 11:46:10,363 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 11:46:10] "GET /api/session HTTP/1.1" 200 -
+2025-08-25 11:46:14,300 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 11:46:14] "[31m[1mPOST /api/upload-dataset HTTP/1.1[0m" 400 -
+2025-08-25 11:46:26,825 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 11:46:26] "[31m[1mPOST /api/upload-dataset HTTP/1.1[0m" 400 -
+2025-08-25 11:50:16,613 - __main__ - INFO - Starting Warehouse Management System
+2025-08-25 11:50:22,946 - __main__ - INFO - Importing Flask application
+2025-08-25 11:50:23,017 - __main__ - ERROR - Failed to import Flask app: cannot import name 'VisualizationGenerator' from 'utils.visualizations' (A:\Repos\vc_slotting\backend\utils\visualizations.py)
+2025-08-25 11:52:51,527 - __main__ - INFO - Starting Warehouse Management System
+2025-08-25 11:52:57,775 - __main__ - INFO - Importing Flask application
+2025-08-25 11:52:58,706 - __main__ - INFO - Flask application started successfully
+2025-08-25 11:52:58,796 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.75.177.120:5000
+2025-08-25 11:52:58,801 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-25 11:53:06,255 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 11:53:06] "GET /api/session HTTP/1.1" 200 -
+2025-08-25 11:53:13,380 - app - INFO - Dataset uploaded and processed successfully. Original: temp_uploads\02ba423a-dc89-4718-9b34-7bb374bc9459_TRY.csv, Processed: temp_uploads\processed_416ab595-c3bf-4889-9d4b-059025064448_TRY.csv
+2025-08-25 11:53:13,387 - app - INFO - Processed columns: ['SKU', 'Location', 'QTY', 'Line', 'Weight', 'depth', 'height', 'Vol', 'Location_Zone', 'Location_Aisle', 'Location_Section', 'Location_Level']
+2025-08-25 11:53:13,393 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 11:53:13] "POST /api/upload-dataset HTTP/1.1" 200 -
+2025-08-25 11:53:22,621 - app - INFO - === Starting slotting process for model: ranking ===
+2025-08-25 11:53:22,621 - app - INFO - Loading processed data from: temp_uploads\processed_416ab595-c3bf-4889-9d4b-059025064448_TRY.csv
+2025-08-25 11:53:22,834 - app - INFO - Successfully loaded data with shape: (22996, 12)
+2025-08-25 11:53:22,837 - app - INFO - Columns: ['SKU', 'Location', 'QTY', 'Line', 'Weight', 'depth', 'height', 'Vol', 'Location_Zone', 'Location_Aisle', 'Location_Section', 'Location_Level']
+2025-08-25 11:53:22,839 - app - INFO - === Generating BEFORE heatmap ===
+2025-08-25 11:53:22,839 - utils.visualizations - INFO - Starting heatmap creation with title: Before Optimization
+2025-08-25 11:53:22,839 - utils.visualizations - INFO - Input dataframe shape: (22996, 12)
+2025-08-25 11:53:22,839 - utils.visualizations - INFO - Input dataframe columns: ['SKU', 'Location', 'QTY', 'Line', 'Weight', 'depth', 'height', 'Vol', 'Location_Zone', 'Location_Aisle', 'Location_Section', 'Location_Level']
+2025-08-25 11:53:22,847 - utils.visualizations - INFO - Before cleaning - rows: 22996
+2025-08-25 11:53:22,868 - utils.visualizations - INFO - After dropna - rows: 14236
+2025-08-25 11:53:22,905 - utils.visualizations - INFO - Zone aggregation completed. Zones: 17
+2025-08-25 11:53:22,905 - utils.visualizations - INFO - Creating zone bar chart
+2025-08-25 11:53:23,036 - utils.visualizations - INFO - Displaying top 15 zones out of 17
+2025-08-25 11:53:27,242 - utils.visualizations - INFO - Successfully created zone bar chart
+2025-08-25 11:53:27,242 - utils.visualizations - INFO - Successfully created zone bar chart
+2025-08-25 11:53:27,242 - app - INFO - Before heatmap generated successfully
+2025-08-25 11:53:27,247 - app - INFO - === Applying ML model: ranking ===
+2025-08-25 11:53:30,841 - app - INFO - ML optimization completed. Output shape: (23110, 12)
+2025-08-25 11:53:30,841 - app - INFO - === Generating AFTER heatmap ===
+2025-08-25 11:53:30,841 - utils.visualizations - INFO - Starting heatmap creation with title: After Optimization
+2025-08-25 11:53:30,844 - utils.visualizations - INFO - Input dataframe shape: (23110, 12)
+2025-08-25 11:53:30,844 - utils.visualizations - INFO - Input dataframe columns: ['SKU', 'Location', 'QTY', 'Line', 'Weight', 'depth', 'height', 'Vol', 'Location_Zone', 'Location_Aisle', 'Location_Section', 'Location_Level']
+2025-08-25 11:53:30,851 - utils.visualizations - INFO - Before cleaning - rows: 23110
+2025-08-25 11:53:30,870 - utils.visualizations - INFO - After dropna - rows: 14324
+2025-08-25 11:53:30,891 - utils.visualizations - INFO - Zone aggregation completed. Zones: 4
+2025-08-25 11:53:30,901 - utils.visualizations - INFO - Creating zone bar chart
+2025-08-25 11:53:32,739 - utils.visualizations - INFO - Successfully created zone bar chart
+2025-08-25 11:53:32,743 - utils.visualizations - INFO - Successfully created zone bar chart
+2025-08-25 11:53:32,743 - app - INFO - After heatmap generated successfully
+2025-08-25 11:53:32,747 - app - INFO - === Calculating optimization metrics ===
+2025-08-25 11:53:47,061 - app - INFO - Metrics calculated successfully
+2025-08-25 11:53:47,061 - app - INFO - === Processing completed successfully ===
+2025-08-25 11:53:47,079 - app - INFO - Response data prepared, sending to client
+2025-08-25 11:53:47,095 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 11:53:47] "POST /api/process-slotting HTTP/1.1" 200 -
+2025-08-25 14:04:00,142 - werkzeug - INFO - 127.0.0.1 - - [25/Aug/2025 14:04:00] "POST /api/signup HTTP/1.1" 200 -
