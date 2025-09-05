@@ -11,7 +11,7 @@ import json
 import tempfile
 
 # Import utility modules
-from backend.utils.data_processor import DataProcessor
+from .utils.data_processor import DataProcessor
 from backend.utils.auth import AuthManager
 from backend.warehouse_slotting_optimizer import WarehouseSlottingOptimizer
 from backend.models.ranking_slotting_model import RankingSlottingModel
