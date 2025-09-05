@@ -7,6 +7,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-EXPOSE $PORT
+EXPOSE 10000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "backend.app:app"]
+CMD sh -c "gunicorn --bind 0.0.0.0:$PORT backend.app:app"
