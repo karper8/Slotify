@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload & Optimize - Slotting Tool</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="Home.html">Home</a>
+        <a href="Login.html">Account</a>
+        <a href="AboutUs.html">About Us</a>
+        <a href="upload_page.html" style="color: #ffd700;">Upload</a>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i>
+        </button>
+        <button id="logoutBtn" class="logout-btn" onclick="logout()" style="display: none;">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </nav>
+
+    <div class="main-container">
+        <div id="userStatus" class="user-status" style="display: none;">
+            <span id="welcomeMessage"></span>
+        </div>
+
+        <section id="uploadSection" class="upload-section">
+            <h1>Upload Your Warehouse Data</h1>
+            <div class="upload-container">
+                <div class="file-drop-zone" id="dropZone">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <h3>Drag & Drop Your File Here</h3>
+                    <p>Or click to browse</p>
+                    <p class="file-info">Supported formats: CSV, XLSX, XLS (Max 10MB)</p>
+                    <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" hidden>
+                </div>
+                <div id="uploadStatus" class="status-message"></div>
+            </div>
+        </section>
+
+        <section id="previewSection" class="preview-section" style="display: none;">
+            <h2>Dataset Preview</h2>
+            <div id="datasetInfo" class="dataset-info"></div>
+            <div id="previewTable" class="preview-table"></div>
+        </section>
+
+        <section id="modelSection" class="model-section" style="display: none;">
+            <h2>Select Optimization Model</h2>
+            <div class="model-cards">
+                <div class="model-card" id="randomForestCard">
+                    <div class="model-header">
+                        <h3><i class="fas fa-tree"></i> Random Forest Model</h3>
+                        <span class="model-badge recommended">Recommended</span>
+                    </div>
+                    <div class="model-description">
+                        <p>ABC/FSN classification with KMeans clustering and RandomForest prediction</p>
+                        <ul>
+                            <li>Advanced pattern recognition</li>
+                            <li>High accuracy predictions</li>
+                            <li>Travel time optimization</li>
+                        </ul>
+                    </div>
+                    <button class="model-btn" id="rfBtn" onclick="runOptimization('random_forest')">
+                        Run Random Forest
+                    </button>
+                </div>
+
+                <div class="model-card" id="rankingCard">
+                    <div class="model-header">
+                        <h3><i class="fas fa-sort-amount-down"></i> Ranking Model</h3>
+                        <span class="model-badge fast">Fast</span>
+                    </div>
+                    <div class="model-description">
+                        <p>Ranking-based slotting with simulated annealing optimization</p>
+                        <ul>
+                            <li>Quick optimization</li>
+                            <li>Composite ranking score</li>
+                            <li>Efficient placement</li>
+                        </ul>
+                    </div>
+                    <button class="model-btn" id="rankingBtn" onclick="runOptimization('ranking')">
+                        Run Ranking Model
+                    </button>
+                </div>
+
+                <div class="model-card compare-card">
+                    <div class="model-header">
+                        <h3><i class="fas fa-balance-scale"></i> Compare Models</h3>
+                        <span class="model-badge analysis">Analysis</span>
+                    </div>
+                    <div class="model-description">
+                        <p>Run both models and compare performance metrics</p>
+                        <ul>
+                            <li>Side-by-side comparison</li>
+                            <li>Performance metrics</li>
+                            <li>Best model recommendation</li>
+                        </ul>
+                    </div>
+                    <button class="model-btn" id="compareBtn" onclick="compareModels()">
+                        Compare Both Models
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="resultsSection" class="results-section" style="display: none;">
+            <div class="results-header">
+                <h2 id="resultsTitle">Optimization Results</h2>
+                <div class="results-actions">
+                    <button class="action-btn" onclick="downloadResults()">
+                        <i class="fas fa-download"></i> Download Excel
+                    </button>
+                    <button class="action-btn" onclick="runNewOptimization()">
+                        <i class="fas fa-redo"></i> New Optimization
+                    </button>
+                </div>
+            </div>
+
+            <div id="metricsCards" class="metrics-cards"></div>
+
+            <div id="heatmapsContainer" class="heatmaps-container">
+                <div class="heatmap-section">
+                    <h3>Before Optimization</h3>
+                    <div id="beforeHeatmap" class="heatmap-container">
+                        <div class="loading">Generating heatmap...</div>
+                    </div>
+                </div>
+                <div class="heatmap-section">
+                    <h3>After Optimization</h3>
+                    <div id="afterHeatmap" class="heatmap-container">
+                        <div class="loading">Generating heatmap...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="detailedResults" class="detailed-results"></div>
+        </section>
+
+        <section id="comparisonSection" class="comparison-section" style="display: none;">
+            <h2>Model Comparison Results</h2>
+            <div id="comparisonContent"></div>
+            <div class="comparison-actions">
+                <button class="action-btn" onclick="downloadComparisonResults('random_forest')">
+                    <i class="fas fa-download"></i> Download RF Results
+                </button>
+                <button class="action-btn" onclick="downloadComparisonResults('ranking')">
+                    <i class="fas fa-download"></i> Download Ranking Results
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Slotting Tool. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let hasDataset = false;
+        let currentResults = null;
+        const API_BASE = '/api';
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            checkAuthentication();
+            setupFileUpload();
+        });
+
+        // Theme functions
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        }
+
+        function loadTheme() {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark');
+            }
+        }
+
+        // Authentication functions
+        async function checkAuthentication() {
+            try {
+                const response = await fetch(`${API_BASE}/session`, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                
+                if (data.authenticated) {
+                    currentUser = data.username;
+                    hasDataset = data.has_dataset;
+                    showUserStatus(data.username);
+                    
+                    if (hasDataset) {
+                        showDatasetPreview();
+                        showModelSelection();
+                    }
+                } else {
+                    window.location.href = 'Login.html';
+                }
+            } catch (error) {
+                console.error('Authentication check failed:', error);
+                showStatus('Failed to check authentication', 'error');
+            }
+        }
+
+        function showUserStatus(username) {
+            document.getElementById('userStatus').style.display = 'block';
+            document.getElementById('welcomeMessage').textContent = `Welcome back, ${username}!`;
+            document.getElementById('logoutBtn').style.display = 'inline-block';
+        }
+
+        async function logout() {
+            try {
+                await fetch(`${API_BASE}/logout`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                localStorage.removeItem('user');
+                window.location.href = 'Login.html';
+            } catch (error) {
+                console.error('Logout failed:', error);
+            }
+        }
+
+        // File upload functions
+        function setupFileUpload() {
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+
+            dropZone.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', handleFileSelect);
+
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('drag-over');
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('drag-over');
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFileSelect({ target: { files } });
+                }
+            });
+        }
+
+        async function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const validTypes = ['text/csv', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
+            if (!validTypes.includes(file.type) && !file.name.match(/\.(csv|xlsx|xls)$/i)) {
+                showStatus('Please select a CSV or Excel file', 'error');
+                return;
+            }
+
+            if (file.size > 10 * 1024 * 1024) {
+                showStatus('File size must be less than 10MB', 'error');
+                return;
+            }
+
+            showStatus('Uploading file...', 'info');
+            
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch(`${API_BASE}/upload-dataset`, {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include'
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showStatus('File uploaded successfully!', 'success');
+                    hasDataset = true;
+                    showDatasetInfo(result.info);
+                    showDatasetPreview();
+                    showModelSelection();
+                } else {
+                    showStatus(result.error || 'Upload failed', 'error');
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                showStatus('Upload failed. Please try again.', 'error');
+            }
+        }
+
+        function showDatasetInfo(info) {
+            const infoHTML = `
+                <div class="info-cards">
+                    <div class="info-card">
+                        <h4>Dataset Summary</h4>
+                        <p><strong>Filename:</strong> ${info.filename}</p>
+                        <p><strong>Rows:</strong> ${info.rows.toLocaleString()}</p>
+                        <p><strong>Columns:</strong> ${info.columns}</p>
+                        <p><strong>SKUs:</strong> ${info.summary_stats.unique_skus.toLocaleString()}</p>
+                        <p><strong>Locations:</strong> ${info.summary_stats.unique_locations.toLocaleString()}</p>
+                        <p><strong>Total Picks:</strong> ${info.summary_stats.total_picks.toLocaleString()}</p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('datasetInfo').innerHTML = infoHTML;
+        }
+
+        async function showDatasetPreview() {
+            try {
+                const response = await fetch(`${API_BASE}/dataset-preview`, {
+                    credentials: 'include'
+                });
+                const result = await response.json();
+                
+                if (response.ok) {
+                    const preview = result.preview;
+                    if (preview.preview && preview.preview.length > 0) {
+                        const columns = Object.keys(preview.preview[0]);
+                        let tableHTML = '<div class="table-container"><table class="preview-table-element"><thead><tr>';
+                        
+                        columns.forEach(col => {
+                            tableHTML += `<th>${col}</th>`;
+                        });
+                        tableHTML += '</tr></thead><tbody>';
+                        
+                        preview.preview.slice(0, 5).forEach(row => {
+                            tableHTML += '<tr>';
+                            columns.forEach(col => {
+                                const value = row[col] != null ? row[col] : '';
+                                tableHTML += `<td>${value}</td>`;
+                            });
+                            tableHTML += '</tr>';
+                        });
+                        tableHTML += '</tbody></table></div>';
+                        
+                        document.getElementById('previewTable').innerHTML = tableHTML;
+                        document.getElementById('previewSection').style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                console.error('Preview error:', error);
+            }
+        }
+
+        function showModelSelection() {
+            document.getElementById('modelSection').style.display = 'block';
+        }
+
+        // Model optimization functions
+        async function runOptimization(modelType) {
+            if (!hasDataset) {
+                showStatus('Please upload a dataset first', 'error');
+                return;
+            }
+
+            const btnId = modelType === 'random_forest' ? 'rfBtn' : 'rankingBtn';
+            const button = document.getElementById(btnId);
+            const originalText = button.textContent;
+            
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
+            
+            showStatus(`Running ${modelType === 'random_forest' ? 'Random Forest' : 'Ranking'} optimization...`, 'info');
+
+            try {
+                const endpoint = modelType === 'random_forest' ? '/warehouse-slotting' : '/ranking-slotting';
+                const response = await fetch(`${API_BASE}${endpoint}`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showStatus('Optimization completed successfully!', 'success');
+                    currentResults = result;
+                    showResults(result, modelType);
+                } else {
+                    showStatus(result.error || 'Optimization failed', 'error');
+                }
+            } catch (error) {
+                console.error('Optimization error:', error);
+                showStatus('Optimization failed. Please try again.', 'error');
+            } finally {
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        }
+
+        async function compareModels() {
+            if (!hasDataset) {
+                showStatus('Please upload a dataset first', 'error');
+                return;
+            }
+
+            const button = document.getElementById('compareBtn');
+            const originalText = button.textContent;
+            
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Comparing...';
+            
+            showStatus('Running model comparison...', 'info');
+
+            try {
+                const response = await fetch(`${API_BASE}/compare-models`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showStatus('Model comparison completed!', 'success');
+                    showComparison(result);
+                } else {
+                    showStatus(result.error || 'Comparison failed', 'error');
+                }
+            } catch (error) {
+                console.error('Comparison error:', error);
+                showStatus('Comparison failed. Please try again.', 'error');
+            } finally {
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        }
+
+        function showResults(result, modelType) {
+            document.getElementById('resultsSection').style.display = 'block';
+            document.getElementById('resultsTitle').textContent = 
+                `${modelType === 'random_forest' ? 'Random Forest' : 'Ranking'} Model Results`;
+
+            // Show metrics
+            const metricsHTML = `
+                <div class="metric-card">
+                    <h4>Time Savings</h4>
+                    <div class="metric-value">${result.optimization_metrics.time_saved_percentage || 0}%</div>
+                    <div class="metric-detail">${Math.round(result.optimization_metrics.total_time_saved || 0)} seconds saved</div>
+                </div>
+                <div class="metric-card">
+                    <h4>SKUs Processed</h4>
+                    <div class="metric-value">${result.data_stats.optimized_skus}</div>
+                    <div class="metric-detail">${result.data_stats.total_picks.toLocaleString()} total picks</div>
+                </div>
+                <div class="metric-card">
+                    <h4>Zones Used</h4>
+                    <div class="metric-value">${result.data_stats.zones_used}</div>
+                    <div class="metric-detail">Optimized layout</div>
+                </div>
+            `;
+            document.getElementById('metricsCards').innerHTML = metricsHTML;
+
+            // Show heatmaps
+            if (result.before_heatmap_url) {
+                loadHeatmap('beforeHeatmap', result.before_heatmap_url);
+            }
+            if (result.after_heatmap_url) {
+                loadHeatmap('afterHeatmap', result.after_heatmap_url);
+            }
+
+            // Show detailed results
+            const detailedHTML = `
+                <h3>Optimization Summary</h3>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <strong>Model Used:</strong> ${result.model === 'random_forest' ? 'Random Forest' : 'Ranking Model'}
+                    </div>
+                    <div class="summary-item">
+                        <strong>Total Time Saved:</strong> ${Math.round(result.optimization_metrics.total_time_saved || 0)} seconds
+                    </div>
+                    <div class="summary-item">
+                        <strong>Improvement:</strong> ${result.optimization_metrics.time_saved_percentage || 0}%
+                    </div>
+                </div>
+            `;
+            document.getElementById('detailedResults').innerHTML = detailedHTML;
+
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showComparison(result) {
+            document.getElementById('comparisonSection').style.display = 'block';
+            
+            const comparison = result.comparison;
+            const winner = comparison.performance_comparison.winner;
+            
+            const comparisonHTML = `
+                <div class="comparison-cards">
+                    <div class="comparison-card ${winner === 'random_forest' ? 'winner' : ''}">
+                        <h3>Random Forest Model</h3>
+                        <div class="comparison-metrics">
+                            <p><strong>Time Saved:</strong> ${comparison.random_forest.metrics.time_saved_percentage || 0}%</p>
+                            <p><strong>Total Savings:</strong> ${Math.round(comparison.random_forest.metrics.total_time_saved || 0)}s</p>
+                        </div>
+                        ${winner === 'random_forest' ? '<div class="winner-badge">Winner</div>' : ''}
+                    </div>
+                    
+                    <div class="comparison-card ${winner === 'ranking' ? 'winner' : ''}">
+                        <h3>Ranking Model</h3>
+                        <div class="comparison-metrics">
+                            <p><strong>Time Saved:</strong> ${comparison.ranking.metrics.time_saved_percentage || 0}%</p>
+                            <p><strong>Total Savings:</strong> ${Math.round(comparison.ranking.metrics.total_time_saved || 0)}s</p>
+                        </div>
+                        ${winner === 'ranking' ? '<div class="winner-badge">Winner</div>' : ''}
+                    </div>
+                </div>
+                
+                <div class="performance-delta">
+                    <h4>Performance Difference</h4>
+                    <p>The ${winner === 'random_forest' ? 'Random Forest' : 'Ranking'} model performed 
+                    ${Math.abs(comparison.performance_comparison.time_saved_delta_percentage)}% better</p>
+                </div>
+            `;
+            
+            document.getElementById('comparisonContent').innerHTML = comparisonHTML;
+            document.getElementById('comparisonSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function loadHeatmap(containerId, imageUrl) {
+            const container = document.getElementById(containerId);
+            
+            if (!imageUrl) {
+                container.innerHTML = '<div class="error">Heatmap not available</div>';
+                return;
+            }
+            
+            const fullUrl = `${API_BASE.replace('/api', '')}${imageUrl}`;
+            container.innerHTML = `<img src="${fullUrl}" alt="Warehouse Heatmap" class="heatmap-image">`;
+        }
+        
+        // FIXED DOWNLOAD FUNCTION - Uses proper browser navigation for file downloads
+        function downloadResults() {
+            if (!currentResults || !currentResults.model) {
+                showStatus('No results to download', 'error');
+                return;
+            }
+
+            const modelParam = currentResults.model === 'random_forest' ? 'random_forest' : 'ranking';
+            showStatus('Preparing download...', 'info');
+
+            // Create a temporary anchor element to trigger download
+            const downloadUrl = `${API_BASE}/download-results?model=${modelParam}`;
+            console.log('Downloading from URL:', downloadUrl);
+
+            // Create invisible link and click it to trigger download
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.style.display = 'none';
+            link.setAttribute('target', '_blank');
+            
+            // Add credentials for session-based authentication
+            fetch(downloadUrl, {
+                method: 'GET',
+                credentials: 'include'
+            }).then(response => {
+                if (response.ok) {
+                    // Get the blob and create download
+                    return response.blob();
+                } else {
+                    throw new Error('Download failed');
+                }
+            }).then(blob => {
+                // Create blob URL and trigger download
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                
+                // Get filename from Content-Disposition header or create default
+                const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:]/g, '');
+                a.download = `slotting_results_${modelParam}_${timestamp}.xlsx`;
+                
+                document.body.appendChild(a);
+                a.click();
+                
+                // Clean up
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                showStatus('Download started! Check your downloads folder.', 'success');
+            }).catch(error => {
+                console.error('Download error:', error);
+                showStatus('Download failed. Please try again.', 'error');
+            });
+        }
+
+        // FIXED COMPARISON DOWNLOAD FUNCTION - Uses same approach as main download
+        function downloadComparisonResults(modelType) {
+            showStatus(`Preparing ${modelType} results download...`, 'info');
+
+            const downloadUrl = `${API_BASE}/download-results?model=${modelType}`;
+            console.log('Downloading comparison results from URL:', downloadUrl);
+            
+            // Use fetch to download with credentials
+            fetch(downloadUrl, {
+                method: 'GET',
+                credentials: 'include'
+            }).then(response => {
+                if (response.ok) {
+                    return response.blob();
+                } else {
+                    throw new Error('Download failed');
+                }
+            }).then(blob => {
+                // Create blob URL and trigger download
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                
+                const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:]/g, '');
+                a.download = `slotting_results_${modelType}_${timestamp}.xlsx`;
+                
+                document.body.appendChild(a);
+                a.click();
+                
+                // Clean up
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                showStatus(`${modelType} download started!`, 'success');
+            }).catch(error => {
+                console.error('Download error:', error);
+                showStatus(`${modelType} download failed. Please try again.`, 'error');
+            });
+        }
+
+        function runNewOptimization() {
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('comparisonSection').style.display = 'none';
+            currentResults = null;
+            
+            document.getElementById('modelSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Utility functions
+        function showStatus(message, type) {
+            const statusElement = document.getElementById('uploadStatus');
+            statusElement.textContent = message;
+            statusElement.className = `status-message ${type}`;
+            
+            if (type === 'error' || type === 'success') {
+                setTimeout(() => {
+                    statusElement.textContent = '';
+                    statusElement.className = 'status-message';
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>

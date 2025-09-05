@@ -1,0 +1,2 @@
+GET http://localhost:5000/api/session 
+Cookie: session=eyJfcGVybWFuZW50Ijp0cnVlLCJ1c2VyX2lkIjoiOTFjMTFiMzItNzlmMi00NTVhLTlmMjUtNmQ5MDk3OTNlZWQ5IiwidXNlcm5hbWUiOiJhZG1pbiJ9.aKtTxQ.7H-NdNek10XhVI1y67Tu2beZ6uQ; Expires=Mon, 25 Aug 2025 18:02:45 GMT; HttpOnly; Path=/

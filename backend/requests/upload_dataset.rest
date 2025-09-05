@@ -1,0 +1,9 @@
+POST http://localhost:5000/api/upload-dataset
+Content-Type: multipart/form-data; boundary=my_boundary_string
+
+--my_boundary_string
+Content-Disposition: form-data; name="file"; filename="TRY.csv"
+Content-Type: text/csv
+
+< A:\Repos\vc_slotting\TRY.csv
+--my_boundary_string--

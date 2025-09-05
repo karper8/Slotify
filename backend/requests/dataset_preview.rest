@@ -1,0 +1,10 @@
+GET http://localhost:5000/api/dataset-preview
+
+
+#####
+POST http://localhost:5000/api/warehouse-slotting
+
+
+##### Sending request for heatmaps alone
+
+GET http://localhost:5000/api/get-heatmaps

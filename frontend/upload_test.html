@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Test - Slotting Tool</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Account</a>
+        <a href="#">About Us</a>
+        <a href="#" style="color: #ffd700;">Upload</a>
+        <button class="theme-toggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+
+    <main class="form-container wide">
+        <h1>Upload Warehouse File</h1>
+        <p class="upload-intro">Upload your warehouse Excel file to start slotting optimization.</p>
+
+        <form id="uploadForm">
+            <div class="upload-box">
+                <label for="fileUpload" class="file-label">
+                    <span id="fileName">Click to choose a file (CSV, XLSX, or XLS)</span>
+                    <input type="file" id="fileUpload" name="fileUpload" accept=".csv,.xlsx,.xls" required />
+                </label>
+                <button type="submit" class="upload-btn">Upload & Process</button>
+            </div>
+        </form>
+        
+        <p id="uploadStatus"></p>
+
+        <div id="results-section" style="display:none;">
+            <h2>Optimization Results</h2>
+            <div class="stats-container">
+                <p><strong>Total Time Saved:</strong> <span id="timeSaved"></span> seconds</p>
+                <p><strong>Time Saved Percentage:</strong> <span id="timeSavedPercentage"></span>%</p>
+                <p><strong>Total SKUs Optimized:</strong> <span id="totalSkus"></span></p>
+                <p><strong>Zones Used:</strong> <span id="zonesUsed"></span></p>
+                <p><strong>Total Picks:</strong> <span id="totalPicks"></span></p>
+            </div>
+            
+            <h3>Zone Distribution</h3>
+            <div id="zoneDistribution"></div>
+
+            <h3>Data Statistics</h3>
+            <div class="stats-container">
+                <p><strong>Original Rows:</strong> <span id="originalRows"></span></p>
+                <p><strong>Optimized SKUs:</strong> <span id="optimizedSkus"></span></p>
+                <p><strong>Total Picks:</strong> <span id="totalPicksData"></span></p>
+            </div>
+        </div>
+
+        <section class="comparison" data-aos="fade-up" id="heatmapSection" style="display:none;">
+            <h2>Warehouse Heatmaps</h2>
+            <div class="heatmap-container">
+                <div class="before">
+                    <h3>Before Slotting Optimization</h3>
+                    <img src="" alt="Before Slotting" id="beforeHeatmap" />
+                </div>
+                <div class="after">
+                    <h3>After Slotting Optimization</h3>
+                    <img src="" alt="After Slotting" id="afterHeatmap" />
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Slotting Tool. All rights reserved.</p>
+    </footer>
+
+    <script>
+        AOS.init();
+
+        // Global variables
+        const backendBaseUrl = 'http://localhost:5000'; // Update this to match your backend URL
+        
+        // DOM elements
+        const uploadForm = document.getElementById('uploadForm');
+        const fileUpload = document.getElementById('fileUpload');
+        const fileName = document.getElementById('fileName');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const resultsSection = document.getElementById('results-section');
+        const heatmapSection = document.getElementById('heatmapSection');
+        const beforeHeatmap = document.getElementById('beforeHeatmap');
+        const afterHeatmap = document.getElementById('afterHeatmap');
+
+        // File input change handler
+        fileUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                fileName.textContent = file.name;
+            }
+        });
+
+        // Form submission handler
+        uploadForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const file = fileUpload.files[0];
+            if (!file) {
+                uploadStatus.textContent = 'Please select a file first.';
+                uploadStatus.style.color = 'red';
+                return;
+            }
+
+            try {
+                // Step 1: Upload file
+                uploadStatus.textContent = 'Uploading file...';
+                uploadStatus.style.color = 'blue';
+                
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                const uploadResponse = await fetch(`${backendBaseUrl}/api/upload-dataset`, {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include'
+                });
+
+                if (!uploadResponse.ok) {
+                    const errorData = await uploadResponse.json();
+                    throw new Error(errorData.error || 'Upload failed');
+                }
+
+                const uploadResult = await uploadResponse.json();
+                uploadStatus.textContent = 'File uploaded successfully! Running optimization...';
+                uploadStatus.style.color = 'blue';
+
+                // Step 2: Run warehouse slotting optimization
+                const slottingResponse = await fetch(`${backendBaseUrl}/api/warehouse-slotting`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+
+                if (!slottingResponse.ok) {
+                    const errorData = await slottingResponse.json();
+                    throw new Error(errorData.error || 'Optimization failed');
+                }
+
+                const slottingResult = await slottingResponse.json();
+                uploadStatus.textContent = 'Optimization completed successfully!';
+                uploadStatus.style.color = 'green';
+
+                // Step 3: Render results
+                renderResults(slottingResult);
+
+            } catch (error) {
+                console.error('Error:', error);
+                uploadStatus.textContent = `Error: ${error.message}`;
+                uploadStatus.style.color = 'red';
+            }
+        });
+
+        // Function to render the optimization results
+        function renderResults(data) {
+            console.log('Rendering results:', data);
+            
+            // Show results sections
+            resultsSection.style.display = 'block';
+            heatmapSection.style.display = 'block';
+
+            // Render statistics
+            if (data.optimization_metrics) {
+                const metrics = data.optimization_metrics;
+                document.getElementById('timeSaved').textContent = metrics.total_time_saved || 'N/A';
+                document.getElementById('timeSavedPercentage').textContent = metrics.time_saved_percentage || 'N/A';
+                document.getElementById('totalSkus').textContent = metrics.total_skus || 'N/A';
+                document.getElementById('zonesUsed').textContent = metrics.zones_used || 'N/A';
+                document.getElementById('totalPicks').textContent = metrics.total_picks || 'N/A';
+            }
+
+            // Render data statistics
+            if (data.data_stats) {
+                const stats = data.data_stats;
+                document.getElementById('originalRows').textContent = stats.original_rows || 'N/A';
+                document.getElementById('optimizedSkus').textContent = stats.optimized_skus || 'N/A';
+                document.getElementById('totalPicksData').textContent = stats.total_picks || 'N/A';
+            }
+
+            // Render zone distribution
+            if (data.optimization_metrics && data.optimization_metrics.zone_distribution) {
+                const zoneDist = data.optimization_metrics.zone_distribution;
+                const zoneDiv = document.getElementById('zoneDistribution');
+                zoneDiv.innerHTML = '';
+                
+                Object.entries(zoneDist).forEach(([zone, count]) => {
+                    const zoneSpan = document.createElement('span');
+                    zoneSpan.textContent = `${zone}: ${count}`;
+                    zoneSpan.style.marginRight = '20px';
+                    zoneSpan.style.fontWeight = 'bold';
+                    zoneDiv.appendChild(zoneSpan);
+                });
+            }
+
+            // Render heatmaps
+            if (data.before_heatmap_url && data.after_heatmap_url) {
+                beforeHeatmap.src = `${backendBaseUrl}${data.before_heatmap_url}`;
+                afterHeatmap.src = `${backendBaseUrl}${data.after_heatmap_url}`;
+                
+                // Add error handling for images
+                beforeHeatmap.onerror = function() {
+                    this.style.display = 'none';
+                    const errorDiv = document.createElement('div');
+                    errorDiv.textContent = 'Failed to load before heatmap';
+                    errorDiv.style.color = 'red';
+                    this.parentNode.appendChild(errorDiv);
+                };
+                
+                afterHeatmap.onerror = function() {
+                    this.style.display = 'none';
+                    const errorDiv = document.createElement('div');
+                    errorDiv.textContent = 'Failed to load after heatmap';
+                    errorDiv.style.color = 'red';
+                    this.parentNode.appendChild(errorDiv);
+                };
+            }
+
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
